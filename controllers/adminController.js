@@ -2,6 +2,7 @@ import validator from 'validator'
 import bcrypt from 'bcrypt'
 import { v2 as cloudinary } from 'cloudinary'
 import doctorModel from '../models/doctormodel.js'
+import jwt from 'jsonwebtoken'
 
 // doctor adding
 const addDoctor = async(req,res)=>{
@@ -13,11 +14,11 @@ const addDoctor = async(req,res)=>{
         // console.log({name,email,password,speciality,degree,exprience,about,fees,address},imageFile)
 
         // checking data is complete or not
-        if(!name || !email ||!password || !speciality || !degree || !experience  || !about  ||  !fees  || !address || !imageFile)
+        if(!name || !email || !password || !speciality || !degree || !experience  || !about  ||  !fees  || !address || !imageFile)
         {
             return res.json({
                 success:false,
-                message:"missing details"
+                message:"Missing details"
             })
         }
 
@@ -65,7 +66,7 @@ const addDoctor = async(req,res)=>{
         await newDoctor.save()
           res.json({
             success:"true",
-            message:"doctor added"
+            message:"Doctor added"
           })
          
     }
@@ -78,6 +79,59 @@ const addDoctor = async(req,res)=>{
 
         })
     }
+
 }
 
-export {addDoctor}
+// api for admin login
+const loginAdmin= async (req,res)=>{
+    try{
+        const {email,password}=req.body
+
+        if(email===process.env.ADMIN_EMAIL  &&  password===process.env.ADMIN_PASSWORD)
+        {
+             const token =jwt.sign(email + password , process.env.JWT_SECRET)
+            res.json({success:true,token})
+
+        }
+        else{
+            res.json({
+                success:false,
+                message:"Invalid credentials"
+    
+              })   
+        }
+
+    }
+    catch(error)
+    {
+    // console.log("not working")
+    res.json({
+        success:false,
+        message:error.message
+
+      })
+     }
+}
+
+// api to get all doctor list
+const allDoctors = async(req,res)=>{
+    try{
+        const doctors=await doctorModel.find({}).select('-password')
+        res.json({
+            success:true,
+            doctors
+        })
+
+    }catch(error){
+        res.json({
+            success:false,
+            message:error.message
+    
+          })
+
+    }
+
+}
+
+
+export {addDoctor, loginAdmin,allDoctors};
