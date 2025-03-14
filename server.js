@@ -23,7 +23,7 @@ app.use(cors())
 const cors = require('cors');
 
 app.use(cors({
-  origin: ['https://prescripto-frontend-5-4tfm.onrender.com'], // Allow frontend
+  origin: ['https://prescripto-frontend-7-8coi.onrender.com'], // Allow frontend
   credentials: true,
 }));
 
