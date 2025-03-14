@@ -20,6 +20,14 @@ app.use(express.json())
 app.use(cors())
 
 
+const cors = require('cors');
+
+app.use(cors({
+  origin: ['https://prescripto-frontend-5-4tfm.onrender.com'], // Allow frontend
+  credentials: true,
+}));
+
+
 // api end point
 app.use('/api/admin',adminRouter)
 app.use('/api/doctor',doctorRouter)
