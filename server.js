@@ -27,6 +27,11 @@ app.use(cors({
   credentials: true,
 }));
 
+app.use(cors({
+  origin: ['https://prescripto-admin-1-35dq.onrender.com'], // Your frontend URL
+  credentials: true
+}));
+
 
 // api end point
 app.use('/api/admin',adminRouter)
