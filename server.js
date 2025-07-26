@@ -20,15 +20,22 @@ app.use(express.json())
 app.use(cors())
 
 
-const cors = require('cors');
+// const cors = require('cors');
 
-app.use(cors({
-  origin: ['https://prescripto-frontend-7-8coi.onrender.com'], // Allow frontend
-  credentials: true,
-}));
+// app.use(cors({
+//   origin: ['https://prescripto-frontend-7-8coi.onrender.com'], // Allow frontend
+//   credentials: true,
+// }));
 
+// app.use(cors({
+//   origin: ['https://prescripto-admin-1-35dq.onrender.com'], // Your frontend URL
+//   credentials: true
+// }));
 app.use(cors({
-  origin: ['https://prescripto-admin-1-35dq.onrender.com'], // Your frontend URL
+  origin: [
+    'https://prescripto-frontend-7-8coi.onrender.com',
+    'https://prescripto-admin-1-35dq.onrender.com'
+  ],
   credentials: true
 }));
 
